@@ -1,0 +1,11 @@
+numpy
+soundfile
+librosa
+configparser
+pandas
+torch
+onnx
+onnxruntime-gpu
+# nvidia-pyindex
+# nvidia-tensorrt
+# pycuda
