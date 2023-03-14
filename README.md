@@ -62,8 +62,8 @@ gantt
 |Test set 1 release          | _On or about_ July 28, 2023|
 |Track 1 submission deadline | _On or about_ Aug 28, 2023|
 |Track 1 winner announcement | Sep 14, 2023|
-|Test set 2 release          | _On or about_ Jan 28, 2023|
-|Track 2 submission deadline | _On or about_ Feb 28, 2023|
+|Test set 2 release          | _On or about_ Jan 28, 2024|
+|Track 2 submission deadline | _On or about_ Feb 28, 2024|
 |Track 2 winner announcement | Mar 14, 2024|
 > Challenge dates are subject to change. Registered participants shall be notified of any changes in the dates or fixation of _on or about_ dates.
 
