@@ -34,7 +34,7 @@ gantt
     dateFormat  MM-DD-YYYY
     axisFormat  %m-%d-%Y
 
-    Challenge start :milestone, s0, 03-14-2023, 0d
+    Challenge start :milestone, s0, 03-16-2023, 0d
 
     section Track 1
     Track 1 solution development :active, t0, after s0, 138d
@@ -58,7 +58,7 @@ gantt
 
 |Phase|Date|
 |-|-:|
-|Challenge start             | Mar 14, 2023|
+|Challenge start             | Mar 16, 2023|
 |Test set 1 release          | _On or about_ July 28, 2023|
 |Track 1 submission deadline | _On or about_ Aug 28, 2023|
 |Track 1 winner announcement | Sep 14, 2023|
@@ -266,5 +266,5 @@ The evaluation metrics for participant solutions will be listed below at regular
 > * Metrics shall be taken as submitted by the participants. There will be a verification process during the contest winner evaluation.
 
 
-For any additional clarifications, please refer to the challenge [FAQ](faq.md) or [Rules](Intel_NDNS_Challenge_Rules.pdf) or ask questions in the [discussions](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/discussions).
+For any additional clarifications, please refer to the challenge [FAQ](faq.md) or [Rules](Intel_NDNS_Challenge_Rules.pdf) or ask questions in the [discussions](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/discussions) or email us at [ndns@intel.com](mailto:ndns@intel.com).
 
