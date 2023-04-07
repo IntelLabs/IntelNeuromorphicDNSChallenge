@@ -69,7 +69,7 @@ gantt
 
 
 ### 1. Registration
-1. Create your challenge github repo (public or private) and provide access to `lava-nc` user.
+1. Create your challenge github repo (public or private) and provide access to `lava-nc-user` user.
 2. Register for the challenge [here](https://intel.az1.qualtrics.com/jfe/form/SV_agZwvhRHlMw1y86).
 3. You will receive a registration confirmation.
 
