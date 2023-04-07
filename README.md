@@ -1,6 +1,6 @@
 # Readme
 
-![solution_structure_2023-01-24](https://user-images.githubusercontent.com/29907126/224435994-7a770f82-28e5-4985-8f0c-a372b6e023ec.png)
+![solution_structure_2023-01-24](https://user-images.githubusercontent.com/29907126/225791642-b7888797-1202-4141-8580-63cde1278b98.png)
 
 The [Intel Neuromorphic Deep Noise Suppression Challenge (Intel N-DNS Challenge)](https://arxiv.org/abs/2303.09503) is a contest to help neuromorphic and machine learning researchers create high-quality and low-power real-time audio denoising systems. The Intel N-DNS challenge is inspired by the [Microsoft DNS Challenge](https://github.com/microsoft/DNS-Challenge), and it re-uses the Microsoft DNS Challenge noisy and clean speech datasets. This repository contains the challenge information, code, and documentation to get started with Intel N-DNS Challenge.
 
