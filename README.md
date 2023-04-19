@@ -75,7 +75,7 @@ gantt
 
 Once registered, you will receive updates about different phases of the challenges.
 
-> Participation for Track 2 will need Loihi system cloud access which needs an Intel Neuromorphic Research Collaboration agreement. Drop an email to [inrc_request@intel.com](mailto:inrc_request@intel.com). This process might take a while, so it is recommended to initiate this process as early as possible if you want to participate in Track 2.
+> Participation for Track 2 will need Loihi system cloud access which needs an Intel Neuromorphic Research Collaboration agreement. Please see [Join the INRC](https://intel-ncl.atlassian.net/wiki/spaces/INRC/pages/1784807425/Join+the+INRC) or drop an email to [inrc_interest@intel.com](mailto:inrc_interest@intel.comm). This process might take a while, so it is recommended to initiate this process as early as possible if you want to participate in Track 2.
 
 ### 2. Test Set 1 Release
 Once the _test set 1_ for Track 1 is released, we will enter _Track 1 model freeze phase_. The details on test set 1 will be updated later.
