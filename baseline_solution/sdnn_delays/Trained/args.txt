@@ -1,0 +1,15 @@
+b : 32
+clip : 10
+dmax : 64
+epoch : 50
+exp : d64_002
+gpu : [0]
+lam : 0.001
+lr : 0.001
+n_fft : 512
+out_delay : 0
+path : ../../data/MicrosoftDNS_4_ICASSP/
+scale_grad : 0.8
+seed : None
+tau_grad : 0.1
+threshold : 0.1
