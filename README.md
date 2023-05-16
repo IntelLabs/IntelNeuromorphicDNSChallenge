@@ -178,8 +178,8 @@ python -c "import os; from distutils.sysconfig import get_python_lib; pth = get_
     ```
 
 ### 3. Training/Validation data synthesization
-- Training dataset: `python noisyspeech_synthesizer.py -root ./`
-- Validation dataset: `python noisyspeech_synthesizer.py -root ./ -is_validation_set true`
+- Training dataset: `python noisyspeech_synthesizer.py -root <your dataset folder>`
+- Validation dataset: `python noisyspeech_synthesizer.py -root <your dataset folder> -is_validation_set true`
 
 ### 4. Testing data
 - Testing data with similar statistics as the validation dataset generated from the script above will be made available towards the end of each track. We will initiate a model freeze before the release, meaning the participants will not be able to change their trained model after that.
