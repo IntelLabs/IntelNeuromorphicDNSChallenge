@@ -163,7 +163,7 @@ python -c "import os; from distutils.sysconfig import get_python_lib; pth = get_
         file_hash.update(fb)
         return file_hash.hexdigest()
 
-    sha1sums = pd.read_csv("dns4-datasets-files-sha1.csv.bz2", names=["size", "sha1", "path"])
+    sha1sums = pd.read_csv("dns4-datasets-files-sha1.csv", names=["size", "sha1", "path"])
     file_not_found = []
     for idx in range(len(sha1sums)):
         try:
