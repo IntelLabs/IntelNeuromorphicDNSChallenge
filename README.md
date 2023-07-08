@@ -245,9 +245,14 @@ Other metrics are specific to the N-DNS solution system. For reference, a detail
 Please refer to the [Intel N-DNS Challenge paper](https://arxiv.org/abs/2303.09503) for more details about the metrics.
 
 ## Metricsboard
-The evaluation metrics for participant solutions will be listed below at regular intervals. The entries will be updated with the best solution of the team. Please create a table in markdown (.md) akin to the one below in the Github repository that you share with Intel so that we can import your metrics and update them on the public metricsboard. This will help you meaure the progress of your solution against other participating teams. Earlier submissions are encouraged.
+The evaluation metrics for participant solutions will be listed below and updated at regular intervals.
 
-**Track 1**
+Submitting to the metricsboard will help you meaure the progress of your solution against other participating teams. Earlier submissions are encouraged.
+
+To submit to the metricsboard, please create a ```.yml``` file with contents akin to the table below in the top level of the Github repository that you share with Intel so that we can import your metrics and update them on the public metricsboard. Please use [```example_metricsboard_writeout.py```](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/blob/main/example_metricsboard_writeout.py) as an example for how to generate a valid ```.yml``` file with standard key names. For the Track 1 validation set, name the ```.yml``` file ```metricsboard_track_1_validation.yml```.
+
+
+**Track 1 (Validation Set)**
 | Entry| <sub>$\text{SI-SNR}$ <sup>(dB)| <sub>$\text{SI-SNRi}$ <sup>data (dB)| <sub>$\text{SI-SNRi}$ <sup>enc+dec (dB)| <sub>$\text{MOS}$ <sup>(ovrl)| <sub>$\text{MOS}$ <sup>(sig)| <sub>$\text{MOS}$ <sup>(bak)| <sub>$\text{latency}$ <sup>enc+dec (ms)| <sub>$\text{latency}$ <sup>total (ms)| <sub>$\text{Power}$ $\text{proxy}$ <sup>(M-Ops/s) | <sub>$\text{PDP}$ $\text{proxy}$ <sup>(M-Ops)| <sub>$\text{Params}$ <sup>($\times 10^3$)|<sub>$\text{Size}$ <sup>(KB)|
 |:-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|
 | Team xyz (mm/dd/yyyy)              |       |      |      |      |      |      |       |        |        |      |       |
