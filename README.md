@@ -256,6 +256,7 @@ To submit to the metricsboard, please create a ```.yml``` file with contents aki
 | Entry| <sub>$\text{SI-SNR}$ <sup>(dB)| <sub>$\text{SI-SNRi}$ <sup>data (dB)| <sub>$\text{SI-SNRi}$ <sup>enc+dec (dB)| <sub>$\text{MOS}$ <sup>(ovrl)| <sub>$\text{MOS}$ <sup>(sig)| <sub>$\text{MOS}$ <sup>(bak)| <sub>$\text{latency}$ <sup>enc+dec (ms)| <sub>$\text{latency}$ <sup>total (ms)| <sub>$\text{Power}$ $\text{proxy}$ <sup>(M-Ops/s) | <sub>$\text{PDP}$ $\text{proxy}$ <sup>(M-Ops)| <sub>$\text{Params}$ <sup>($\times 10^3$)|<sub>$\text{Size}$ <sup>(KB)|
 |:-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|
 | Team xyz (mm/dd/yyyy)              |       |      |      |      |      |      |       |        |        |      |       |
+|   NoiCE Spiking Conv (07/27/2023)  | 13.15 | 5.53 | 5.53 |  2.8 | 3.22 | 3.64 | 0.082 |  8.082 | 6,110.78 | 49.09 | 2,100 | 8,209 |
 | Microsoft NsNet2 (02/20/2023)      | 11.89 | 4.26 | 4.26 | 2.95 | 3.27 | 3.94 | 0.024 | 20.024 | 136.13 | 2.72 | 2,681 |10,500|
 | Intel proprietary DNS (02/28/2023) | 12.71 | 5.09 | 5.09 | 3.09 | 3.35 | 4.08 | 0.036 |  8.036 |    -   |   -  | 1,901 | 3,802|
 | Baseline SDNN solution (02/20/2023)| 12.50 | 4.88 | 4.88 | 2.71 | 3.21 | 3.46 | 0.036 |  8.036 |  11.59 | 0.09 |   525 |   465|
