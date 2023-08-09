@@ -1,6 +1,7 @@
 import numpy as np
 from snr import si_snr
 from typing import Iterable
+import soundfile as sf
 
 from lava.magma.core.process.process import AbstractProcess
 from lava.magma.core.process.variable import Var
@@ -24,7 +25,8 @@ class AudioSource(AbstractProcess):
                  hop_length: int,
                  interval: int,
                  offset: int = 0,
-                 sample_idx: int = 0) -> None:
+                 sample_idx: int = 0,
+                 first_buffer: int = 0) -> None:
         super().__init__(dataset=dataset,
                          hop_length=hop_length,
                          interval=interval,
@@ -40,6 +42,20 @@ class AudioSource(AbstractProcess):
         self.noisy_out = OutPort(shape=(hop_length,))
         self.proc_params['saved_dataset'] = dataset
         self.proc_params['data_size'] = hop_length * interval
+        self.proc_params['first_idx'] = first_buffer
+
+    def preload_data(self, clean, noisy):
+        buffer_len = len(self.clean_data.init)
+
+        if len(clean) < buffer_len:
+            self.clean_data.init[:len(clean)] = clean
+        else:
+            self.clean_data.init = clean[:buffer_len] 
+
+        if len(noisy) < buffer_len:
+            self.noisy_data.init[:len(noisy)] = noisy
+        else:
+            self.noisy_data.init = noisy[:buffer_len] 
 
 
 @implements(proc=AudioSource, protocol=LoihiProtocol)
@@ -55,7 +71,7 @@ class PyAudioSourceModel(PyLoihiProcessModel):
 
     def __init__(self, proc_params: dict) -> None:
         super().__init__(proc_params)
-        self.data_idx = 0
+        self.data_idx = self.proc_params['first_idx']
         self.sample_idx = self.proc_params['sample_idx']
         self.data_size = self.proc_params['data_size']
         self.dataset = self.proc_params['saved_dataset']
@@ -131,6 +147,7 @@ class PyAudioReceiverModel(PyLoihiProcessModel):
         self.data_idx = 0
         self.sample_idx = -1
         self.data_size = self.proc_params['data_size']
+        self.save_to = self.proc_params.get('save_to', None)
 
     def run_spk(self) -> None:
         start = int(self.data_idx)
@@ -147,6 +164,11 @@ class PyAudioReceiverModel(PyLoihiProcessModel):
     def run_post_mgmt(self) -> None:
         self.si_snr[self.sample_idx] = si_snr(self.clean_data.astype(float),
                                               self.denoised_data.astype(float))
+        if self.save_to is not None:
+            sf.write(file=f'{self.save_to}_{self.sample_idx}.wav',
+                     data=self.denoised_data,
+                     samplerate=16000)
+            print(f'Saved Audio sample to {self.save_to}_{self.sample_idx}.wav')
         self.clean_data = np.zeros_like(self.clean_data)
         self.denoised_data = np.zeros_like(self.denoised_data)
         self.data_idx = 0
@@ -156,13 +178,14 @@ class PyAudioReceiverModel(PyLoihiProcessModel):
 
 
 class STFT(AbstractProcess):
-    def __init__(self, n_fft: int, hop_length: int) -> None:
+    def __init__(self, n_fft: int, hop_length: int, prefetch_data=None) -> None:
         super().__init__(n_fft=n_fft, hop_length=hop_length)
         fft_out = n_fft // 2 + 1
         self.audio_inp = InPort(shape=(hop_length,))
         self.abs_out = OutPort(shape=(fft_out,))
         self.arg_out = OutPort(shape=(fft_out,))
         self.proc_params['fft_out'] = fft_out
+        self.proc_params['prefetch_data'] = prefetch_data
 
 
 @implements(proc=STFT, protocol=LoihiProtocol)
@@ -178,6 +201,9 @@ class PySTFTModel(PyLoihiProcessModel):
         self.fft_out = self.proc_params['fft_out']
         self.hop_length = self.proc_params['hop_length']
         self.audio_buffer = np.zeros(self.n_fft)
+        if self.proc_params['prefetch_data'] is not None:
+            prefetch_buffer = self.proc_params['prefetch_data'][-self.n_fft:]
+            self.audio_buffer[-len(prefetch_buffer):] = prefetch_buffer
 
     def run_spk(self) -> None:
         hop_length = self.hop_length
@@ -190,12 +216,13 @@ class PySTFTModel(PyLoihiProcessModel):
 
 
 class ISTFT(AbstractProcess):
-    def __init__(self, n_fft: int, hop_length: int) -> None:
+    def __init__(self, n_fft: int, hop_length: int, delay: int = 0) -> None:
         super().__init__(n_fft=n_fft, hop_length=hop_length)
         fft_out = n_fft // 2 + 1
         self.abs_inp = InPort(shape=(fft_out,))
         self.arg_inp = InPort(shape=(fft_out,))
         self.audio_out = OutPort(shape=(hop_length,))
+        self.proc_params['count'] = min(delay + 1, n_fft // hop_length)
 
 
 @implements(proc=ISTFT, protocol=LoihiProtocol)
@@ -210,7 +237,7 @@ class PyISTFTModel(PyLoihiProcessModel):
         self.n_fft = self.proc_params['n_fft']
         self.hop_length = self.proc_params['hop_length']
         self.audio_buffer = np.zeros(self.n_fft)
-        self.count = int(self.n_fft / self.hop_length)
+        self.count = self.proc_params['count']
 
     def run_spk(self) -> None:
         hop_length = self.hop_length
@@ -222,7 +249,10 @@ class PyISTFTModel(PyLoihiProcessModel):
         spectrum = np.concatenate([stft, np.conjugate(stft[1:-1][::-1])])
         segment = np.fft.ifft(spectrum)
         self.audio_buffer += segment.real
-        self.audio_out.send(self.audio_buffer[-hop_length:])
+
+        start_idx = (self.n_fft - self.count * hop_length)
+        stop_idx = start_idx + hop_length
+        self.audio_out.send(self.audio_buffer[start_idx:stop_idx] / self.count)
 
 
 class FixedPtAmp(AbstractProcess):
@@ -242,8 +272,6 @@ class PyFixedPtAmpModel(PyLoihiProcessModel):
 
     def run_spk(self) -> None:
         data = self.inp.recv()
-        # self.out.send(np.clip(2 * np.round(data * self.gain / 2).astype(int),
-        #                       a_max=255, a_min=-256))
         self.out.send(np.round(data * self.gain).astype(int))
 
 
@@ -263,7 +291,9 @@ class PyFloatPtAmpModel(PyLoihiProcessModel):
     out: PyOutPort = LavaPyType(PyOutPort.VEC_DENSE, float)
 
     def run_spk(self) -> None:
-        self.out.send((self.inp.recv() * self.gain).astype(float))
+        raw_data = self.inp.recv()
+        raw_data = (raw_data.astype(np.int32) << 8) >> 8
+        self.out.send((raw_data * self.gain).astype(float))
 
 
 class Bias(AbstractProcess):
@@ -332,10 +362,12 @@ class Encoder(AbstractProcess):
                  n_fft: int,
                  hop_length: int,
                  bias: float,
-                 gain: float) -> None:
+                 gain: float,
+                 prefetch_data: np.ndarray = None) -> None:
         super().__init__(n_fft=n_fft, hop_length=hop_length,
                          bias=bias, gain=gain)
-        self.stft = STFT(n_fft=n_fft, hop_length=hop_length)
+        self.stft = STFT(n_fft=n_fft, hop_length=hop_length,
+                         prefetch_data=prefetch_data)
         self.bias = Bias(shape=self.stft.abs_out.shape, shift=bias)
         self.amplifier = FixedPtAmp(self.stft.abs_out.shape, gain=1 << 6)
 
@@ -362,9 +394,11 @@ class PyEncoderModel(AbstractSubProcessModel):
 
 
 class Decoder(AbstractProcess):
-    def __init__(self, n_fft: int, hop_length: int, gain: float) -> None:
+    def __init__(self, n_fft: int, hop_length: int, gain: float,
+                 istft_delay: int) -> None:
         super().__init__(n_fft=n_fft, hop_length=hop_length, gain=gain)
-        self.istft = ISTFT(n_fft=n_fft, hop_length=hop_length)
+        self.istft = ISTFT(n_fft=n_fft, hop_length=hop_length,
+                           delay=istft_delay) # delay can be [0, n_fft/hop_len)
         self.amplifier = FloatPtAmp(shape=self.istft.abs_inp.shape, gain=gain)
         self.mixer = AmplitudeMixer(shape=self.istft.abs_inp.shape)
 
