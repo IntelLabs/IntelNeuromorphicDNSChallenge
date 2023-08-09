@@ -2,6 +2,7 @@ import numpy as np
 from snr import si_snr
 from typing import Iterable
 import soundfile as sf
+from typing import Optional, Tuple
 
 from lava.magma.core.process.process import AbstractProcess
 from lava.magma.core.process.variable import Var
@@ -20,6 +21,27 @@ from lava.magma.core.model.py.model import PyAsyncProcessModel
 
 
 class AudioSource(AbstractProcess):
+    """Audio source process. It invokes a new clean and noisy sample
+    from the dataset iterable at a set interval and offset. At every
+    hop_length, it sends out a chunk of audio data.
+
+    Parameters
+    ----------
+    dataset : Iterable
+        A dataset object instance that when indexed returns clean and noisy
+        audio samples.
+    hop_length : int
+        Amount of audio samples to step at every timestep.
+    interval : int
+        The interval (in timesteps) between subsequent audio samples.
+    offset : int, optional
+        The offset/phase of sample read, by default 0.
+    sample_idx : int, optional
+        First sample index to begin reading from, by default 0.
+    first_buffer : int, optional
+        The hop in preloaded data, by default 0.
+    """
+
     def __init__(self,
                  dataset: Iterable,
                  hop_length: int,
@@ -44,18 +66,27 @@ class AudioSource(AbstractProcess):
         self.proc_params['data_size'] = hop_length * interval
         self.proc_params['first_idx'] = first_buffer
 
-    def preload_data(self, clean, noisy):
+    def preload_data(self, clean: np.ndarray, noisy: np.ndarray):
+        """Preload data before the first dataset read.
+
+        Parameters
+        ----------
+        clean : np.ndarray
+            Clean audio sample.
+        noisy : np.ndarray
+            Noisy audio sample.
+        """
         buffer_len = len(self.clean_data.init)
 
         if len(clean) < buffer_len:
             self.clean_data.init[:len(clean)] = clean
         else:
-            self.clean_data.init = clean[:buffer_len] 
+            self.clean_data.init = clean[:buffer_len]
 
         if len(noisy) < buffer_len:
             self.noisy_data.init[:len(noisy)] = noisy
         else:
-            self.noisy_data.init = noisy[:buffer_len] 
+            self.noisy_data.init = noisy[:buffer_len]
 
 
 @implements(proc=AudioSource, protocol=LoihiProtocol)
@@ -109,6 +140,22 @@ class PyAudioSourceModel(PyLoihiProcessModel):
 
 
 class AudioReceiver(AbstractProcess):
+    """Audio receiver process. It receives clean input and denoised input
+    data one hop_length at a time and evaluates the SI-SNR of the collected
+    audio once every interval.
+
+    Parameters
+    ----------
+    hop_length : int
+        Hop length of audio samples.
+    num_samples : int
+        Number of audio samples expected to evaluate SI-SNR.
+    interval : int
+        The interval (in timesteps) between subsequent audio samples.
+    offset : int, optional
+        The phase/offset of sample evaluation, by default 0.
+    """
+
     def __init__(self,
                  hop_length: int,
                  num_samples: int,
@@ -168,7 +215,8 @@ class PyAudioReceiverModel(PyLoihiProcessModel):
             sf.write(file=f'{self.save_to}_{self.sample_idx}.wav',
                      data=self.denoised_data,
                      samplerate=16000)
-            print(f'Saved Audio sample to {self.save_to}_{self.sample_idx}.wav')
+            print(
+                f'Saved Audio sample to {self.save_to}_{self.sample_idx}.wav')
         self.clean_data = np.zeros_like(self.clean_data)
         self.denoised_data = np.zeros_like(self.denoised_data)
         self.data_idx = 0
@@ -178,7 +226,22 @@ class PyAudioReceiverModel(PyLoihiProcessModel):
 
 
 class STFT(AbstractProcess):
-    def __init__(self, n_fft: int, hop_length: int, prefetch_data=None) -> None:
+    """STFT process. Calculates FFT of n_fft audio data points in buffer.
+    It advances the audio samples by hop_length every timestep. The output is
+    the absolute and angle of the STFT complex value.
+
+    Parameters
+    ----------
+    n_fft : int
+        Size of audio data buffer.
+    hop_length : int
+        The shift of audio data points at every timestep.
+    prefetch_data : np.ndarray, optional
+        Intial buffer data to begin with. It is assumed to be zero if None. Ny default None.
+    """
+
+    def __init__(self, n_fft: int, hop_length: int,
+                 prefetch_data: Optional[np.ndarray] = None) -> None:
         super().__init__(n_fft=n_fft, hop_length=hop_length)
         fft_out = n_fft // 2 + 1
         self.audio_inp = InPort(shape=(hop_length,))
@@ -216,6 +279,19 @@ class PySTFTModel(PyLoihiProcessModel):
 
 
 class ISTFT(AbstractProcess):
+    """ISTFT process. Calculates IFFT of n_fft audio spectrum points in buffer.
+    It advances the audio samples by hop_length every timestep. The output is the reconstructed audio.
+
+    Parameters
+    ----------
+    n_fft : int
+        Size of audio data buffer.
+    hop_length : int
+        The shift of audio data points at every timestep.
+    delay : int, optional
+        Number of data buffer overlap to reconstruct the audio sample. It must be less than n_fft//hop_length. By default 0.
+    """
+
     def __init__(self, n_fft: int, hop_length: int, delay: int = 0) -> None:
         super().__init__(n_fft=n_fft, hop_length=hop_length)
         fft_out = n_fft // 2 + 1
@@ -256,7 +332,19 @@ class PyISTFTModel(PyLoihiProcessModel):
 
 
 class FixedPtAmp(AbstractProcess):
-    def __init__(self, shape, gain=1 << 6) -> None:
+    """Fixed point amplification process. It applies a gain and then
+    quantizes the values.
+
+    Parameters
+    ----------
+    shape : Tuple[int]
+        Shape of the amplifier data.
+    gain : float, optional
+        The gain to be applied to the data before quantization, by default
+        1<<6.
+    """
+
+    def __init__(self, shape: Tuple[int], gain: float = 1 << 6) -> None:
         super().__init__(shape=shape, gain=gain)
         self.gain = Var((1,), gain)
         self.inp = InPort(shape=shape)
@@ -276,7 +364,18 @@ class PyFixedPtAmpModel(PyLoihiProcessModel):
 
 
 class FloatPtAmp(AbstractProcess):
-    def __init__(self, shape, gain=1 / (1 << 6)) -> None:
+    """Floating point converter process. It applies a gain to properly
+    interpret the fixed point input as a floating point number.
+
+    Parameters
+    ----------
+    shape : Tuple[int]
+        Shape of the amplifier data.
+    gain : float, optional
+        The gain of the amplifier, by default 1/(1 << 6).
+    """
+
+    def __init__(self, shape: Tuple[int], gain: float = 1 / (1 << 6)) -> None:
         super().__init__(shape=shape, gain=gain)
         self.gain = Var((1,), gain)
         self.inp = InPort(shape=shape)
@@ -297,7 +396,17 @@ class PyFloatPtAmpModel(PyLoihiProcessModel):
 
 
 class Bias(AbstractProcess):
-    def __init__(self, shape, shift) -> None:
+    """Bias shift process. It adds a constant values to its input data.
+
+    Parameters
+    ----------
+    shape : Tuple[int]
+        Shape of the data.
+    shift : float
+        Bias value to be added.
+    """
+
+    def __init__(self, shape: Tuple[int], shift: float) -> None:
         super().__init__(shape=shape, shift=shift)
         self.shift = Var((1,), shift)
         self.inp = InPort(shape=shape)
@@ -316,7 +425,16 @@ class PyBiasModel(PyLoihiProcessModel):
 
 
 class AmplitudeMixer(AbstractProcess):
-    def __init__(self, shape) -> None:
+    """Process to mix amplitude of the STFT amplitude data. Applies mask to
+    clean the STFT magnitue spectrum.
+
+    Parameters
+    ----------
+    shape : Tuple[int]
+        Shape of the data.
+    """
+
+    def __init__(self, shape: Tuple[int]) -> None:
         super().__init__(shape=shape)
         self.mask_inp = InPort(shape=shape)
         self.stft_inp = InPort(shape=shape)
@@ -337,7 +455,17 @@ class PyAmplitudeMixerModel(PyLoihiProcessModel):
 
 
 class DelayBuffer(AbstractProcess):
-    def __init__(self, shape, delay) -> None:
+    """Delay process. Delays the input signal by a given amount.
+
+    Parameters
+    ----------
+    shape : Tuple[int]
+        Shape of the data.
+    delay : int
+        Delay amount.
+    """
+
+    def __init__(self, shape: Tuple[int], delay: int) -> None:
         super().__init__(shape=shape, delay=delay)
         self.buffer = Var((*shape, delay))
         self.inp = InPort(shape=shape)
@@ -358,6 +486,24 @@ class PyDelayBufferModel(PyLoihiProcessModel):
 
 
 class Encoder(AbstractProcess):
+    """Audio encoder process. Encapsulates STFT conversion, bias shift
+    and fixed point conversion of the audio sample preprocessing.
+
+    Parameters
+    ----------
+    n_fft : int
+        Number of fft samples.
+    hop_length : int
+        Advance of audio samples at each timestep.
+    bias : float
+        Bias shift value.
+    gain : float
+        Fixed point conversion gain.
+    prefetch_data : np.ndarray, optional
+        Pre-fetched STFT data buffer. None will initialize the buffer to
+        zero, by default None.
+    """
+
     def __init__(self,
                  n_fft: int,
                  hop_length: int,
@@ -394,11 +540,26 @@ class PyEncoderModel(AbstractSubProcessModel):
 
 
 class Decoder(AbstractProcess):
+    """Decoder process of network output. Reconstructs the audio data from
+    the raw denoising network output.
+
+    Parameters
+    ----------
+    n_fft : int
+        Number of fft samples.
+    hop_length : int
+        Advance of audio samples at each timestep.
+    gain : float
+        Floating point interpretation gain.
+    istft_delay : int
+        Delay of ISTFT audio generation. It must be less than n_fft//hop_length.
+    """
+
     def __init__(self, n_fft: int, hop_length: int, gain: float,
                  istft_delay: int) -> None:
         super().__init__(n_fft=n_fft, hop_length=hop_length, gain=gain)
         self.istft = ISTFT(n_fft=n_fft, hop_length=hop_length,
-                           delay=istft_delay) # delay can be [0, n_fft/hop_len)
+                           delay=istft_delay)  # delay can be [0, n_fft/hop_len)
         self.amplifier = FloatPtAmp(shape=self.istft.abs_inp.shape, gain=gain)
         self.mixer = AmplitudeMixer(shape=self.istft.abs_inp.shape)
 
