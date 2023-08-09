@@ -37,7 +37,7 @@ gantt
     Challenge start :milestone, s0, 03-16-2023, 0d
 
     section Track 1
-    Track 1 solution development :active, t0, after s0, 138d
+    Track 1 solution development :active, t0, after s0, 155d
     Test Set 1 release           :milestone, after t0
     Track 1 submission           :t2, after t0, 30d
     Model freeze                 :crit, t2, after t0, 30d
@@ -59,9 +59,9 @@ gantt
 |Phase|Date|
 |-|-:|
 |Challenge start             | Mar 16, 2023|
-|Test set 1 release          | _On or about_ July 28, 2023|
-|Track 1 submission deadline | _On or about_ Aug 28, 2023|
-|Track 1 winner announcement | Sep 14, 2023|
+|Test set 1 release          | _On or about_ Aug 18, 2023|
+|Track 1 submission deadline | _On or about_ Sep 18, 2023|
+|Track 1 winner announcement | Oct 2, 2023|
 |Test set 2 release          | _On or about_ Jan 28, 2024|
 |Track 2 submission deadline | _On or about_ Feb 28, 2024|
 |Track 2 winner announcement | Mar 14, 2024|
