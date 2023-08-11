@@ -19,6 +19,7 @@ if __name__ == '__main__':
             'PDP_proxy_Ops': 0.09 * 10**6,
             'params': 525 * 10**3,
             'size_kilobytes': 465,
+            'model_path': './baseline_solution/sdnn_delays/Trained/network.pt',
         },
         {
             'team': 'Intel Neuromorphic Computing Lab',
@@ -36,6 +37,7 @@ if __name__ == '__main__':
             'PDP_proxy_Ops': None,
             'params': 1901 * 10**3,
             'size_kilobytes': 3802,
+            'model_path': None,
         },
         ]
       
