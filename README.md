@@ -12,7 +12,7 @@ A solution to the Intel N-DNS Challenge consists of an audio **encoder**, a **ne
 
 Solutions submitted to the Intel N-DNS challenge are evaluated in terms of an audio quality metric (denoising task performance) and computational resource usage metrics, which measure the efficiency of the solution as a system; submissions also include source code and a short write-up. Solutions will be holistically considered (metrics, write-up, innovativeness, commercial relevance, etc.) by an Intel committee for a monetary prize (details below).
 
-Please see our [paper](https://iopscience.iop.org/article/10.1088/2634-4386/ace737) ([arXiv](https://arxiv.org/abs/2303.09503)) for a more detailed overview of the challenge.
+Please see our [paper in Neuromorphic Computing and Engineering](https://iopscience.iop.org/article/10.1088/2634-4386/ace737) ([also on arXiv](https://arxiv.org/abs/2303.09503)) for a more detailed overview of the challenge.
 
 ## Table of Contents
 * [How to participate?](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge#how-to-participate)
