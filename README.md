@@ -2,7 +2,7 @@
 
 ![solution_structure_2023-01-24](https://user-images.githubusercontent.com/29907126/225791642-b7888797-1202-4141-8580-63cde1278b98.png)
 
-The [Intel Neuromorphic Deep Noise Suppression Challenge (Intel N-DNS Challenge)](https://arxiv.org/abs/2303.09503) is a contest to help neuromorphic and machine learning researchers create high-quality and low-power real-time audio denoising systems. The Intel N-DNS challenge is inspired by the [Microsoft DNS Challenge](https://github.com/microsoft/DNS-Challenge), and it re-uses the Microsoft DNS Challenge noisy and clean speech datasets. This repository contains the challenge information, code, and documentation to get started with Intel N-DNS Challenge.
+The [Intel Neuromorphic Deep Noise Suppression Challenge (Intel N-DNS Challenge)](https://iopscience.iop.org/article/10.1088/2634-4386/ace737) is a contest to help neuromorphic and machine learning researchers create high-quality and low-power real-time audio denoising systems. The Intel N-DNS challenge is inspired by the [Microsoft DNS Challenge](https://github.com/microsoft/DNS-Challenge), and it re-uses the Microsoft DNS Challenge noisy and clean speech datasets. This repository contains the challenge information, code, and documentation to get started with Intel N-DNS Challenge.
 
 A solution to the Intel N-DNS Challenge consists of an audio **encoder**, a **neuromorphic denoiser**, and an audio **decoder**. Noisy speech is input to the encoder, which converts the audio waveform into a form suitable for processing in the neuromorphic denoiser. The neuromorphic denoiser takes this input and removes noise from the signal. Finally, the decoder converts the output of the neuromorphic denoiser into a clean output audio waveform. The Intel N-DNS Challenge consists of two tracks:
 
@@ -12,7 +12,7 @@ A solution to the Intel N-DNS Challenge consists of an audio **encoder**, a **ne
 
 Solutions submitted to the Intel N-DNS challenge are evaluated in terms of an audio quality metric (denoising task performance) and computational resource usage metrics, which measure the efficiency of the solution as a system; submissions also include source code and a short write-up. Solutions will be holistically considered (metrics, write-up, innovativeness, commercial relevance, etc.) by an Intel committee for a monetary prize (details below).
 
-Please see our [arXiv paper](https://arxiv.org/abs/2303.09503) for a more detailed overview of the challenge.
+Please see our [paper](https://iopscience.iop.org/article/10.1088/2634-4386/ace737) ([arXiv](https://arxiv.org/abs/2303.09503)) for a more detailed overview of the challenge.
 
 ## Table of Contents
 * [How to participate?](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge#how-to-participate)
@@ -194,7 +194,7 @@ validation_set = DNSAudio(root=<your dataset folder> + 'validation_set/')
 
 ## Baseline Solution
 
-The baseline solution is described in the [Intel N-DNS Challenge paper](https://arxiv.org/abs/2303.09503). 
+The baseline solution is described in the [Intel N-DNS Challenge paper](https://iopscience.iop.org/article/10.1088/2634-4386/ace737). 
 
 The code for training and running the baseline solution can be found in this directory: `baseline_solution/sdnn_delays`. 
 
@@ -242,7 +242,7 @@ This repo provides DNSMOS module which is wrapped from Microsoft DNS challenge. 
 
 Other metrics are specific to the N-DNS solution system. For reference, a detailed walkthrough of the evaluation of the baseline solution is described in [`baseline_solution/sdnn_delays/evaluate_network.ipynb`](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/blob/main/baseline_solution/sdnn_delays/evaluate_network.ipynb).
 
-Please refer to the [Intel N-DNS Challenge paper](https://arxiv.org/abs/2303.09503) for more details about the metrics.
+Please refer to the [Intel N-DNS Challenge paper](https://iopscience.iop.org/article/10.1088/2634-4386/ace737) for more details about the metrics.
 
 ## Metricsboard
 The evaluation metrics for participant solutions will be listed below and updated at regular intervals.
