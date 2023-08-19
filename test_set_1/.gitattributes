@@ -1,0 +1,10 @@
+test_set_1.zip filter=lfs diff=lfs merge=lfs -text
+test_set_1.z03 filter=lfs diff=lfs merge=lfs -text
+test_set_1.z04 filter=lfs diff=lfs merge=lfs -text
+test_set_1.z05 filter=lfs diff=lfs merge=lfs -text
+test_set_1.z06 filter=lfs diff=lfs merge=lfs -text
+test_set_1.z09 filter=lfs diff=lfs merge=lfs -text
+test_set_1.z01 filter=lfs diff=lfs merge=lfs -text
+test_set_1.z02 filter=lfs diff=lfs merge=lfs -text
+test_set_1.z07 filter=lfs diff=lfs merge=lfs -text
+test_set_1.z08 filter=lfs diff=lfs merge=lfs -text

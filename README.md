@@ -117,15 +117,19 @@ These awards will be made based on the judging of the Intel committee. Where the
 > * For avoidance of doubt, Intel has the sole discretion to determine the category of the entries to the N-DNS Award contest.
 
 ### Solution Writeup
-We also ask that challenge participants submit a short (one or two page) write-up that explains the thought process that went into developing their solution. Please include what worked, what did not work, and why certain strategies were chosen versus others. While audio quality and power are key metrics for evaluating solutions, the overarching goal of this challenge is to drive neuromorphic algorithm innovation, and challenge participant learnings are extremely valuable.
+We also ask that challenge participants submit a short (one or two page) write-up that explains the thought process that went into developing their solution. Please include:
 
-This write-up can be submitted directly to Intel to maintain privacy before the track deadline, but for the write-up to be considered in the holistic evaluation of the solution for the monetary prize, we require that it be shared publicly within 14 days after the deadline for each track. Naturally, however, we encourage participants to share their write-ups publicly at any time, to help inspire others' solutions.
+- What worked, what did not work, and why certain strategies were chosen versus others. While audio quality and power are key metrics for evaluating solutions, the overarching goal of this challenge is to drive neuromorphic algorithm innovation, and challenge participant learnings are extremely valuable.
+- A clear table with the test set 1 evaluation metrics for your solution akin to the Table in the [Metricsboard](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge#metricsboard).
+- Brief instructions for how to train your model and run test set inference. (E.g., path to a training & inference script in your Github repository)
+- Brief instructions on how to run inference in Lava for your model. (E.g., path to an example python notebook with a basic Lava process diagram like [baseline_solution/sdnn_delays/lava_inference.ipynb](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/blob/main/baseline_solution/sdnn_delays/lava_inference.ipynb)
+
+For your writeup, please use a single-column Word document or Latex template with 1-inch margins, single-spacing, reasonable font size (11pt or 12pt; default font like Times New Roman), and up to two US letter-size or A4 pages. Please submit a PDF. Please upload your writeup PDF to the top level of your Github repository with filename ```writeup.pdf```. 
+
+Please note that each team submits a single write-up. If a team is submitting multiple models to the Metricsboard, a single write-up should describe all models from that team. This write-up can be submitted directly to Intel to maintain privacy before the track deadline, but for the write-up to be considered in the holistic evaluation of the solution for the monetary prize, we require that it be shared publicly within 14 days after the test set evaluation deadline for each track. Naturally, however, we encourage participants to share their write-ups publicly at any time, to help inspire others' solutions.
 
 Additionally, we plan to invite a select group of challenge participants to present their solutions at a future Intel Neuromorphic Research Community (INRC) forum, based on their algorithmic innovation and metricsboard results as judged by the Intel committee, to share their learnings and participate in a discussion on developing new and improved neuromorphic computing challenges.
 
-For ease of comparison, we ask that your solution write-up include a clear table with the evaluation metrics for your solution akin to the Table in the [Metricsboard](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge#metricsboard).
-
-For your writeup, please use a single-column Word document or Latex template with 1-inch margins, single-spacing, reasonable font size (11pt or 12pt; default font like Times New Roman), and up to two US letter-size or A4 pages. Please submit a PDF.
 
 ### Source code
 Challenge participants must provide the source code used in the creation of their solution (model definition, final trained model, training scripts, inference scripts, etc.) with MIT or BSD3 license.
@@ -182,7 +186,12 @@ python -c "import os; from distutils.sysconfig import get_python_lib; pth = get_
 - Validation dataset: `python noisyspeech_synthesizer.py -root <your dataset folder> -is_validation_set true`
 
 ### 4. Testing data
-- Testing data with similar statistics as the validation dataset generated from the script above will be made available towards the end of each track. We will initiate a model freeze before the release, meaning the participants will not be able to change their trained model after that.
+- __Testing dataset for track 1__ can be downloaded by executing the download script `./test_set_1/download.sh`
+    - > __Note:__ The test set download makes use of git large file system (GIT LFS). Make sure you have installed git-lfs `git lfs install`
+    - The download script will printout further commands to
+        1. verify the dataset files and 
+        2. extract the audio data. The default extraction folder is `data/MicrosoftDNS_4_ICASSP/test_set_1/`
+- Testing data with similar statistics as the validation dataset generated from the script above will be made available towards the end of each track 2 as well.
 
 ## Dataloader
 ```python
@@ -190,6 +199,7 @@ from audio_dataloader import DNSAudio
 
 train_set = DNSAudio(root=<your dataset folder> + 'training_set/')
 validation_set = DNSAudio(root=<your dataset folder> + 'validation_set/')
+test_set_1 = DNSAudio(root=<your dataset folder> + 'test_set_1/')
 ```
 
 ## Baseline Solution
@@ -249,7 +259,7 @@ The evaluation metrics for participant solutions will be listed below and update
 
 Submitting to the metricsboard will help you meaure the progress of your solution against other participating teams. Earlier submissions are encouraged.
 
-To submit to the metricsboard, please create a ```.yml``` file with contents akin to the table below in the top level of the Github repository that you share with Intel so that we can import your metrics and update them on the public metricsboard. Please use [```example_metricsboard_writeout.py```](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/blob/main/example_metricsboard_writeout.py) as an example for how to generate a valid ```.yml``` file with standard key names. For the Track 1 validation set, name the ```.yml``` file ```metricsboard_track_1_validation.yml```.
+To submit to the metricsboard, please create a ```.yml``` file with contents akin to the table below in the top level of the Github repository that you share with Intel so that we can import your metrics and update them on the public metricsboard. Please use [```example_metricsboard_writeout.py```](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/blob/main/example_metricsboard_writeout.py) as an example for how to generate a valid ```.yml``` file with standard key names. For the Track 1 validation set, name the ```.yml``` file ```metricsboard_track_1_validation.yml```. For Track 1 test set, name the ```.yml``` file ```metricsboard_track_1_test.yml```.
 
 
 **Track 1 (Validation Set)**
@@ -266,7 +276,7 @@ To submit to the metricsboard, please create a ```.yml``` file with contents aki
 | NECOTIS (PSNN 2023-07-27)  | 14.02 | 6.64 | 6.64 | 2.88 | 3.25 | 3.78 | 0.00 | 32.00 | 92.86 | 2.97 | 1,512.19 | 5,907.00 |
 | NECOTIS (SRNN-256 2023-07-27)  | 11.03 | 3.66 | 3.66 | 2.75 | 3.17 | 3.61 | 0.00 | 32.00 | 0.20 | 0.01 | 459.78 | 1,796.00 |
 | NoiCE (Spiking Conv 2023-07-27)  | 13.15 | 5.53 | 5.53 | 2.80 | 3.22 | 3.64 | 0.08 | 32.08 | 6,110.78 | 194.87 | 2,100.22 | 8,209.00 |
-| Phase 3 Physics (Conv SDNN solution, epoch 4 2023-08-04) __No model file!__ | 12.74 | 5.16 | 5.16 | 2.75 | 3.20 | 3.58 | 0.15 | 8.15 | 51.30 | 0.42 | 497.00 | 1,900.00 |
+| Phase 3 Physics (Conv SDNN solution, 21 training epochs 2023-08-04)  | 13.11 | 5.52 | 5.52 | 2.79 | 3.18 | 3.71 | 0.12 | 32.12 | 52.50 | 1.69 | 497.00 | 1,900.00 |
 | XTeam (CTDNN_LARGE 2023-08-03)  | 15.55 | 9.14 | 9.14 | 3.11 | 3.42 | 3.98 | 0.05 | 32.06 | 262.87 | 2.12 | 1,901.82 | 7,607.00 |
 | XTeam (CTDNN_LAVADL 2023-08-15)  | 14.00 | 7.59 | 7.59 | 3.02 | 3.38 | 3.84 | 0.00 | 32.00 | 61.37 | 0.49 | 904.80 | 3,619.18 |
 | XTeam (CTDNN_MIDDLE 2023-08-03)  | 14.47 | 8.06 | 8.06 | 2.99 | 3.36 | 3.83 | 0.05 | 32.67 | 224.64 | 1.95 | 1,605.50 | 6,422.00 |
