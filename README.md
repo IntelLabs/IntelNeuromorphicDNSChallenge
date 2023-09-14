@@ -78,11 +78,11 @@ Once registered, you will receive updates about different phases of the challeng
 > Participation for Track 2 will need Loihi system cloud access which needs an Intel Neuromorphic Research Collaboration agreement. Please see [Join the INRC](https://intel-ncl.atlassian.net/wiki/spaces/INRC/pages/1784807425/Join+the+INRC) or drop an email to [inrc_interest@intel.com](mailto:inrc_interest@intel.comm). This process might take a while, so it is recommended to initiate this process as early as possible if you want to participate in Track 2.
 
 ### 2. Test Set 1 Release
-Once the _test set 1_ for Track 1 is released, we will enter _Track 1 model freeze phase_. The details on test set 1 will be updated later.
+The test set for Track 1 has been released, and we are currently in the _Track 1 model freeze phase_. The details on test set 1 can be found [here](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge#4-testing-data).
 * Participants shall not change their model during this phase.
-* Participants shall evaluate their model on _test set 1_, measure all the necessary metrics on an Intel Core i5 quad-core machine clocked at 2.4 GHz or weaker, and submit their metrics along with a solution writeup.
+* Participants shall evaluate their model on _test set 1_, measure all the necessary metrics on an Intel Core i5 quad-core machine clocked at 2.4 GHz or weaker, and submit their metrics to the test set metricsboard, along with a solution writeup.
 
-> __Important:__ At least one valid metric board entry must have been submitted before _Track 1 model freeze phase_. Metricboard entries will be randomly verified.
+> __Important:__ At least one validation metricsboard entry must have been submitted before the _Track 1 model freeze phase_. Metricboard entries will be randomly verified.
 
 ### 3. Track 1 Winner
 A committee of Intel employees will evaluate the Track 1 solutions to decide the winners, making a holistic evaluation including audio quality, computational resource usage, solution write-up quality, innovativeness, and commercial relevance.
