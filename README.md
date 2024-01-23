@@ -85,7 +85,13 @@ The test set for Track 1 has been released, and we are currently in the _Track 1
 > __Important:__ At least one validation metricsboard entry must have been submitted before the _Track 1 model freeze phase_. Metricboard entries will be randomly verified.
 
 ### 3. Track 1 Winner
-A committee of Intel employees will evaluate the Track 1 solutions to decide the winners, making a holistic evaluation including audio quality, computational resource usage, solution write-up quality, innovativeness, and commercial relevance.
+A committee of Intel employees evaluated the Track 1 solutions considering audio quality, computational resource usage, solution write-up quality, innovativeness, and commercial relevance. __Team Clairaudience__ was declared __the winner of Track 1 of the challenge__. To find out more about the winning solution, watch the talk from the winning team [here](https://intel-ncl.atlassian.net/wiki/spaces/INRC/blog/2023/12/01/2027225099/INRC+Forum+12+12+2023.+Clairaudience+Intel+N-DNS+Challenge+Track+1+Algorithmic+Winner.) and the implementation [github repo](https://github.com/haoxiangsnr/audiozen).
+
+<p align="center">
+<img src="https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/assets/29907126/f13377d7-0bf4-41e0-96b6-d0560d9ebe97" alt="Team Clairaudience" style="max-height: 300px;"/>
+</p>
+<p align="center">Team Clairaudience: Track 1 Winner</p>
+
 
 > __Important:__ Intel reserves the right to consider and evaluate submissions at its discretion. Implementation and management of this challenge and associated prizes are subject to change at any time without notice to contest participants or winners and is at the complete discretion of Intel.
 
@@ -262,33 +268,37 @@ Submitting to the metricsboard will help you meaure the progress of your solutio
 To submit to the metricsboard, please create a ```.yml``` file with contents akin to the table below in the top level of the Github repository that you share with Intel so that we can import your metrics and update them on the public metricsboard. Please use [```example_metricsboard_writeout.py```](https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/blob/main/example_metricsboard_writeout.py) as an example for how to generate a valid ```.yml``` file with standard key names. For the Track 1 validation set, name the ```.yml``` file ```metricsboard_track_1_validation.yml```. For Track 1 test set, name the ```.yml``` file ```metricsboard_track_1_test.yml```.
 
 
-**Track 1 (Validation Set)**
+**Track 1 final results (Test Set 1)**
 | Entry| <sub>$\text{SI-SNR}$ <sup>(dB)| <sub>$\text{SI-SNRi}$ <sup>data (dB)| <sub>$\text{SI-SNRi}$ <sup>enc+dec (dB)| <sub>$\text{MOS}$ <sup>(ovrl)| <sub>$\text{MOS}$ <sup>(sig)| <sub>$\text{MOS}$ <sup>(bak)| <sub>$\text{latency}$ <sup>enc+dec (ms)| <sub>$\text{latency}$ <sup>total (ms)| <sub>$\text{Power}$ $\text{proxy}$ <sup>(M-Ops/s) | <sub>$\text{PDP}$ $\text{proxy}$ <sup>(M-Ops)| <sub>$\text{Params}$ <sup>($\times 10^3$)|<sub>$\text{Size}$ <sup>(KB)|
 |:-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|
-| Team xyz (mm/dd/yyyy)              |       |      |      |      |      |      |       |        |        |      |       |
-| Clairaudience (ALIF 2023-07-26)  | 13.68 | 6.79 | 6.79 | 0.35 | 0.06 | 0.95 | 0.04 | 16.04 | 14.60 | 0.23 | 1,580.00 | 6,320.00 |
-| Clairaudience (model_L 2023-07-27)  | 14.51 | 7.62 | 7.62 | 0.61 | 0.21 | 1.31 | 0.04 | 8.04 | 74.10 | 0.60 | 1,289.00 | 5,156.00 |
-| Clairaudience (model_M 2023-07-26)  | 14.50 | 7.61 | 7.61 | 0.62 | 0.22 | 1.31 | 0.04 | 8.04 | 53.60 | 0.43 | 954.00 | 3,816.00 |
-| Clairaudience (model_S 2023-07-25)  | 13.67 | 6.78 | 6.78 | 0.55 | 0.15 | 1.27 | 0.04 | 8.04 | 29.00 | 0.23 | 512.00 | 2,048.00 |
-| Clairaudience (model_XL 2023-07-27)  | 14.93 | 8.04 | 8.04 | 0.65 | 0.25 | 1.32 | 0.04 | 8.04 | 55.91 | 0.45 | 1,798.00 | 7,192.00 |
-| NECOTIS (PSNN - K3 2023-08-03)  | 12.40 | 5.03 | 5.03 | 2.65 | 2.91 | 3.94 | 0.06 | 32.06 | 56.00 | 1.80 | 723.71 | 2,827.00 |
-| NECOTIS (PSNN - With binary input spike encoding 2023-07-27)  | 13.22 | 5.85 | 5.85 | 2.85 | 3.26 | 3.72 | 0.06 | 32.06 | 88.66 | 2.84 | 1,512.19 | 5,907.00 |
-| NECOTIS (PSNN 2023-07-27)  | 14.02 | 6.64 | 6.64 | 2.88 | 3.25 | 3.78 | 0.00 | 32.00 | 92.86 | 2.97 | 1,512.19 | 5,907.00 |
-| NECOTIS (SRNN-256 2023-07-27)  | 11.03 | 3.66 | 3.66 | 2.75 | 3.17 | 3.61 | 0.00 | 32.00 | 0.20 | 0.01 | 459.78 | 1,796.00 |
-| NoiCE (Spiking Conv 2023-07-27)  | 13.15 | 5.53 | 5.53 | 2.80 | 3.22 | 3.64 | 0.08 | 32.08 | 6,110.78 | 194.87 | 2,100.22 | 8,209.00 |
-| Phase 3 Physics (Conv SDNN solution, 21 training epochs 2023-08-04)  | 13.11 | 5.52 | 5.52 | 2.79 | 3.18 | 3.71 | 0.12 | 32.12 | 52.50 | 1.69 | 497.00 | 1,900.00 |
-| SPANDEX (50% Sparsity SDNN 2023-08-18)  | 12.33 | 7.58 | 7.58 | 2.70 | 3.19 | 3.46 | 0.01 | 32.01 | 9.37 | 0.30 | 215.00 | 356.00 |
-| SPANDEX (75% Sparsity SDNN 2023-08-18)  | 11.90 | 7.58 | 7.58 | 2.69 | 3.25 | 3.30 | 0.01 | 32.01 | 6.04 | 0.19 | 108.00 | 182.00 |
-| Siliron (ARG-ABS SDNN solution 2023-08-18)  | 9.16 | 1.60 | 1.60 | 2.57 | 3.22 | 3.02 | 0.01 | 8.03 | 1.21 | 0.09 | 33.00 | 77.20 |
-| XTeam (CTDNN_LARGE 2023-08-03)  | 15.55 | 9.14 | 9.14 | 3.11 | 3.42 | 3.98 | 0.05 | 32.06 | 262.87 | 2.12 | 1,901.82 | 7,607.00 |
-| XTeam (CTDNN_LAVADL 2023-08-15)  | 14.00 | 7.59 | 7.59 | 3.02 | 3.38 | 3.84 | 0.00 | 32.00 | 61.37 | 0.49 | 904.80 | 3,619.18 |
-| XTeam (CTDNN_MIDDLE 2023-08-03)  | 14.47 | 8.06 | 8.06 | 2.99 | 3.36 | 3.83 | 0.05 | 32.67 | 224.64 | 1.95 | 1,605.50 | 6,422.00 |
-| XTeam (XNN 2023-08-04)  | 11.59 | 5.18 | 5.18 | 2.79 | 3.30 | 3.45 | 0.00 | 32.00 | 82.08 | 0.66 | 3,676.17 | 14,704.00 |
-| jiaxingdns (spikingdns 2023-08-18)  | 14.11 | 6.49 | 6.49 | 2.77 | 3.16 | 3.65 | 0.01 | 8.01 |  |  | 793.00 |  |
-| Microsoft NsNet2 (02/20/2023)      | 11.89 | 4.26 | 4.26 | 2.95 | 3.27 | 3.94 | 0.024 | 20.024 | 136.13 | 2.72 | 2,681 |10,500|
-| Intel proprietary DNS (02/28/2023) | 12.71 | 5.09 | 5.09 | 3.09 | 3.35 | 4.08 | 0.030 | 32.030 |    -   |   -  | 1,901 | 3,802|
-| Baseline SDNN solution (02/20/2023)| 12.50 | 4.88 | 4.88 | 2.71 | 3.21 | 3.46 | 0.030 | 32.030 |  14.54 | 0.46 |   525 |   465|
-| Validation set                     |  7.62 |   -  |   -  | 2.45 | 3.19 | 2.72 |   -   |    -   |    -   |   -  |   -   |   -  |
+| <td colspan=12> [Team Clairaudience](https://github.com/haoxiangsnr/audiozen) 🥇🥇🥇**Track 1 Winner**🏆🏆🏆 |
+| Clairaudience (model_L 2023-07-27)  | 14.80 | 7.43 | 7.43 | 3.03 | 3.33 | 3.96 | 0.03 | 32.03 | 74.10 | 2.37 | 1,289.00 | 5,156.00 |
+| Clairaudience (model_M 2023-07-26)  | 14.71 | 7.34 | 7.34 | 3.05 | 3.35 | 3.97 | 0.03 | 32.03 | 53.60 | 1.72 | 954.00 | 3,816.00 |
+| Clairaudience (model_S 2023-07-25)  | 13.89 | 6.52 | 6.52 | 2.97 | 3.28 | 3.93 | 0.03 | 32.03 | 29.24 | 0.94 | 521.00 | 2,084.00 |
+| Clairaudience (model_XL 2023-07-27)  | 15.20 | 7.83 | 7.83 | 3.07 | 3.37 | 3.99 | 0.03 | 32.03 | 55.91 | 1.79 | 1,798.00 | 7,192.00 |
+|<td colspan=12> [Team XTeam](https://github.com/wangtianrui/XTeam) 🥈🥈**Track 1 Runner Up**|
+| XTeam (CTDNN_LAVADL 2023-09-15)  | 13.52 | 6.59 | 6.59 | 2.97 | 3.32 | 3.86 | 0.00 | 32.00 | 61.37 | 0.49 | 904.80 | 3,619.18 |
+| XTeam (XNN 2023-09-15)  | 10.75 | 3.82 | 3.82 | 2.73 | 3.20 | 3.50 | 0.00 | 32.00 | 82.08 | 0.66 | 3,676.17 | 14,704.00 |
+| <td colspan=12> [Team SPANDEX](https://github.com/Michaeljurado42/SPANDEX) 🥉**Track 1 Honorable Mention**|
+| SPANDEX (50% Sparsity SDNN 2023-08-18)  | 12.16 | 4.80 | 4.80 | 2.70 | 3.19 | 3.46 | 0.01 | 32.01 | 9.32 | 0.30 | 344.00 | 305.00 |
+| SPANDEX (75% Sparsity SDNN 2023-08-18)  | 11.72 | 4.36 | 4.36 | 2.68 | 3.24 | 3.29 | 0.01 | 32.01 | 6.06 | 0.19 | 174.00 | 154.00 |
+| <td colspan=12> [Team NECOTIS](https://github.com/NECOTIS/IntelNeuromorphicDNSChallenge)|
+| NECOTIS (PSNN - K3 2023-08-03)  | 12.32 | 4.96 | 4.96 | 2.68 | 2.91 | 3.96 | 0.00 | 32.00 | 57.24 | 1.83 | 723.71 | 2,827.00 |
+| NECOTIS (PSNN 2023-07-27)  | 13.65 | 6.26 | 6.26 | 2.67 | 2.92 | 3.93 | 0.00 | 32.00 | 105.17 | 3.37 | 1,512.19 | 5,907.00 |
+| NECOTIS (SRNN-256 2023-07-27)  | 10.83 | 3.46 | 3.46 | 2.78 | 3.18 | 3.75 | 0.00 | 32.00 | 18.57 | 0.59 | 459.78 | 1,796.00 |
+| <td colspan=12> [Team NoiCE](https://github.com/thebarnable/noice)|
+| NoiCE (Spiking Conv 2023-09-18)  | 12.96 | 5.60 | 5.60 | 2.79 | 3.22 | 3.64 | 0.05 | 32.05 | 6,110.76 | 195.87 | 2,100.22 | 8,209.00 |
+| <td colspan=12> [Team Phase3 Physics](https://github.com/phase3physics/INDNS)|
+| Phase 3 Physics (Conv SDNN solution, 21 training epochs 2023-09-18)  | 12.59 | 5.22 | 5.22 | 2.74 | 3.18 | 3.59 | 0.01 | 32.01 | 51.20 | 1.64 | 497.00 | 1,900.00 |
+|<td colspan=12> [Team Siliron](https://github.com/zhe-ch/Siliron)|
+| Siliron (ARG-ABS SDNN solution 2023-09-16)  | 9.05 | 1.69 | 1.69 | 2.55 | 3.22 | 2.94 | 0.02 | 8.02 | 1.16 | 0.01 | 33.00 | 77.20 |
+|<td colspan=12> __Baselines__|
+| Microsoft NsNet2 (02/20/2023)      | 11.63 | 4.26 | 4.26 | 2.95 | 3.26 | 3.93 | 0.024 | 20.024 | 136.13 | 2.72 | 2,681 | 10,500 |
+| Intel proprietary DNS (02/28/2023) | 12.51 | 5.14 | 5.14 | 3.08 | 3.34 | 4.07 | 0.015 | 31.015 |    -   |   -  | 1,901 | 3,802|
+| Baseline SDNN solution (02/20/2023)| 12.26 | 4.89 | 4.89 | 2.70 | 3.20 | 3.45 | 0.015 | 32.015 |  14.52 | 0.46 |   525 |   465|
+| Test Set 1                         |  7.37 |   -  |   -  | 2.43 | 3.16 | 2.69 |   -   |    -   |    -   |   -  |   -   |   -  |
+
+> **Note:** Track 1 validation metricsboard can be found [here](track1_val_metricsboard.md).
 
 **Track 2**
 | Entry| <sub>$\text{SI-SNR}$ <sup>(dB)| <sub>$\text{SI-SNRi}$ <sup>data (dB)| <sub>$\text{SI-SNRi}$ <sup>enc+dec (dB)| <sub>$\text{MOS}$ <sup>(ovrl)| <sub>$\text{MOS}$ <sup>(sig)| <sub>$\text{MOS}$ <sup>(bak)| <sub>$\text{latency}$ <sup>enc+dec (ms)| <sub>$\text{latency}$ <sup>total (ms)| <sub>$\text{Power}$ <sup>(W) | <sub>$\text{PDP}$ <sup>(Ws)| <sub>$\text{Cores}$|
