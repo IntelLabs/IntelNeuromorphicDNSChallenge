@@ -85,7 +85,7 @@ The test set for Track 1 has been released, and we are currently in the _Track 1
 > __Important:__ At least one validation metricsboard entry must have been submitted before the _Track 1 model freeze phase_. Metricboard entries will be randomly verified.
 
 ### 3. Track 1 Winner
-A committee of Intel employees evaluated the Track 1 solutions considering audio quality, computational resource usage, solution write-up quality, innovativeness, and commercial relevance. __Team Clairaudience__ was declared __the winner of Track 1 of the challenge__. To find out more about the winning solution, watch the talk from the winning team [here](https://intel-ncl.atlassian.net/wiki/spaces/INRC/blog/2023/12/01/2027225099/INRC+Forum+12+12+2023.+Clairaudience+Intel+N-DNS+Challenge+Track+1+Algorithmic+Winner.) and the implementation [github repo](https://github.com/haoxiangsnr/audiozen).
+A committee of Intel employees evaluated the Track 1 solutions considering audio quality, computational resource usage, solution write-up quality, innovativeness, and commercial relevance. __Team Clairaudience__ was declared __the winner of Track 1 of the challenge__. To find out more about the winning solution, watch the talk from the winning team [here](https://intel-ncl.atlassian.net/wiki/spaces/INRC/blog/2023/12/01/2027225099/INRC+Forum+12+12+2023.+Clairaudience+Intel+N-DNS+Challenge+Track+1+Algorithmic+Winner.) and the implementation [github repo](https://github.com/haoxiangsnr/spiking-fullsubnet).
 
 <p align="center">
 <img src="https://github.com/IntelLabs/IntelNeuromorphicDNSChallenge/assets/29907126/f13377d7-0bf4-41e0-96b6-d0560d9ebe97" alt="Team Clairaudience" style="max-height: 300px;"/>
@@ -271,7 +271,7 @@ To submit to the metricsboard, please create a ```.yml``` file with contents aki
 **Track 1 final results (Test Set 1)**
 | Entry| <sub>$\text{SI-SNR}$ <sup>(dB)| <sub>$\text{SI-SNRi}$ <sup>data (dB)| <sub>$\text{SI-SNRi}$ <sup>enc+dec (dB)| <sub>$\text{MOS}$ <sup>(ovrl)| <sub>$\text{MOS}$ <sup>(sig)| <sub>$\text{MOS}$ <sup>(bak)| <sub>$\text{latency}$ <sup>enc+dec (ms)| <sub>$\text{latency}$ <sup>total (ms)| <sub>$\text{Power}$ $\text{proxy}$ <sup>(M-Ops/s) | <sub>$\text{PDP}$ $\text{proxy}$ <sup>(M-Ops)| <sub>$\text{Params}$ <sup>($\times 10^3$)|<sub>$\text{Size}$ <sup>(KB)|
 |:-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|-:|
-| <td colspan=12> [Team Clairaudience](https://github.com/haoxiangsnr/audiozen) 🥇🥇🥇**Track 1 Winner**🏆🏆🏆 |
+| <td colspan=12> [Team Clairaudience](https://github.com/haoxiangsnr/spiking-fullsubnet) 🥇🥇🥇**Track 1 Winner**🏆🏆🏆 |
 | Clairaudience (model_L 2023-07-27)  | 14.80 | 7.43 | 7.43 | 3.03 | 3.33 | 3.96 | 0.03 | 32.03 | 74.10 | 2.37 | 1,289.00 | 5,156.00 |
 | Clairaudience (model_M 2023-07-26)  | 14.71 | 7.34 | 7.34 | 3.05 | 3.35 | 3.97 | 0.03 | 32.03 | 53.60 | 1.72 | 954.00 | 3,816.00 |
 | Clairaudience (model_S 2023-07-25)  | 13.89 | 6.52 | 6.52 | 2.97 | 3.28 | 3.93 | 0.03 | 32.03 | 29.24 | 0.94 | 521.00 | 2,084.00 |
